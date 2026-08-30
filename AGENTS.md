@@ -11,21 +11,23 @@ the problem, the primary user, and the current state. Two or three sentences.
 Keep it current. An out-of-date description here misleads every future conversation.
 -->
 
-This is an unmodified AISprints starter. No application features have been built yet.
-The technical PRD in `ai-workspace/` is the source of truth for what is being built and
-for the current phase of work.
+Quiz Maker is a web app for creating and taking quizzes. Sprint 0 (Authentication) is
+complete: sign up, sign in, logout, session management, and protected routes. See
+`ai-workspace/AUTHENTICATION_TECHNICAL_PRD.md` for requirements and status.
 
 ## Stack
 
 - **Next.js 16** with the App Router and React 19
 - **Cloudflare Workers** for hosting, via `@opennextjs/cloudflare`
+- **Cloudflare D1** for user and session storage (binding `DB`)
 - **Tailwind CSS v4**, configured in CSS rather than a JS config file
 - **shadcn/ui** on Base UI, `base-nova` style, with Lucide icons
 - **TypeScript** in strict mode
 - **Wrangler** for Cloudflare configuration, secrets, and deployment
+- **Zod** for request validation
 
-No database, authentication, testing framework, or AI SDK is installed yet. Do not
-write code that imports one without adding it first and telling the user.
+No testing framework or AI SDK is installed yet. Do not write code that imports one
+without adding it first and telling the user.
 
 ## Layout
 

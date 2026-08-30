@@ -1,2 +1,8 @@
 # Load .env.development* files when running `wrangler dev`
 NEXTJS_ENV=development
+
+# Used to sign session cookies (generate a random string for local dev)
+SESSION_SECRET=
+
+# Optional: session lifetime in days (default: 7)
+# SESSION_MAX_AGE_DAYS=7
