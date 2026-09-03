@@ -518,22 +518,22 @@ Record a preview attempt.
 
 
 
-### Phase 3: Dashboard Table and Actions - PLANNED
+### Phase 3: Dashboard Table and Actions - COMPLETED
 
 **Objective:** Replace Dashboard placeholder with MCQ list and row actions shell.
 
 **Tasks:**
 
-1. Add shadcn `dropdown-menu` component (`npx shadcn@latest add @shadcn/dropdown-menu`).
-2. Create `src/components/mcq/mcq-table.tsx` with Table, actions menu, empty state.
-3. Update `src/app/(protected)/dashboard/page.tsx` — header, Create button, table.
-4. Wire Edit/Preview navigation from dropdown.
-5. Create `src/components/mcq/delete-mcq-dialog.tsx` and hook Delete action.
+1. ✅ Add shadcn `dropdown-menu` component (`npx shadcn@latest add @shadcn/dropdown-menu`).
+2. ✅ Create `src/components/mcq/mcq-table.tsx` with Table, actions menu, empty state.
+3. ✅ Update `src/app/(protected)/dashboard/page.tsx` — header, Create button, table.
+4. ✅ Wire Edit/Preview navigation from dropdown.
+5. ✅ Create `src/components/mcq/delete-mcq-dialog.tsx` and hook Delete action.
 
 **Deliverables:**
 
-- Dashboard lists MCQs from API/service
-- Row actions navigate or open delete dialog
+- ✅ Dashboard lists MCQs from API/service
+- ✅ Row actions navigate or open delete dialog
 
 
 
@@ -619,11 +619,12 @@ Record a preview attempt.
 | `src/app/api/mcqs/route.ts`                                | List + create                    | ✅ Created |
 | `src/app/api/mcqs/[id]/route.ts`                           | Get, update, delete              | ✅ Created |
 | `src/app/api/mcqs/[id]/attempts/route.ts`                  | Record attempt                   | ✅ Created |
-| `src/components/mcq/mcq-table.tsx`                         | Dashboard table                  | PLANNED |
+| `src/components/mcq/mcq-table.tsx`                         | Dashboard table                  | ✅ Created |
 | `src/components/mcq/mcq-form.tsx`                          | Create/edit form                 | PLANNED |
 | `src/components/mcq/mcq-preview.tsx`                       | Preview + attempt                | PLANNED |
-| `src/components/mcq/delete-mcq-dialog.tsx`                 | Delete confirmation              | PLANNED |
-| `src/app/(protected)/dashboard/page.tsx`                   | MCQ list page                    | PLANNED |
+| `src/components/mcq/delete-mcq-dialog.tsx`                 | Delete confirmation              | ✅ Created |
+| `src/components/ui/dropdown-menu.tsx`                      | Row actions menu                 | ✅ Created |
+| `src/app/(protected)/dashboard/page.tsx`                   | MCQ list page                    | ✅ Created |
 | `src/app/(protected)/dashboard/mcqs/new/page.tsx`          | Create page                      | PLANNED |
 | `src/app/(protected)/dashboard/mcqs/[id]/edit/page.tsx`    | Edit page                        | PLANNED |
 | `src/app/(protected)/dashboard/mcqs/[id]/preview/page.tsx` | Preview page                     | PLANNED |
@@ -874,19 +875,19 @@ When working with this PRD:
 
 **Last Updated:** September 3, 2026
 
-**Current Phase:** Phase 3 — Dashboard Table and Actions
+**Current Phase:** Phase 4 — Create, Edit, and Preview Pages
 
 **Status:** PLANNED
 
-**Verification (Phase 2):**
+**Verification (Phase 3):**
 
-- `npm run test` — 29 tests passed (18 validation + 11 service)
+- `npm run test` — 29 tests passed
 - `npm run lint` — pass
-- `npm run build` — pass (MCQ API routes registered)
+- `npm run build` — pass
 
 **Next Steps:**
 
-1. Add shadcn `dropdown-menu` component
-2. Build Dashboard MCQ table and row actions
-3. Add delete confirmation dialog
+1. Create shared `mcq-form.tsx` for create/edit
+2. Add `/dashboard/mcqs/new`, edit, and preview pages
+3. Wire preview attempt submission UI
 

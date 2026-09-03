@@ -1,0 +1,36 @@
+---
+description: Phase implementation workflow — user approval, commit, and push
+alwaysApply: true
+---
+
+# Phase Implementation Workflow
+
+When implementing work from a technical PRD phased plan (for example
+`ai-workspace/*_TECHNICAL_PRD.md`):
+
+## After each phase
+
+1. **Complete the phase scope only** — do not start the next phase in the same turn
+   unless the user explicitly asks.
+2. **Verify** — run the checks relevant to that phase (`npm run test`, `npm run lint`,
+   `npm run build` when code changed). Report actual results.
+3. **Update the PRD** — mark the phase status and key files table for that phase.
+4. **Stop and summarize** — tell the user what was delivered and what the next phase is.
+5. **Do not commit or push** until the user reviews and approves.
+
+## After user approval
+
+When the user confirms the phase looks good (or explicitly asks to commit):
+
+1. Commit only files for that phase on the **current feature branch** (do not switch
+   branches unless asked).
+2. Use a commit message that states which phase was completed and why.
+3. Push to the same feature branch on `origin` (`git push origin <branch>` or
+   `git push -u origin HEAD` if tracking is not set).
+4. Exclude unrelated local changes (for example formatting-only edits in other PRDs)
+   unless the user included them in the review.
+
+## Do not
+
+- Auto-commit or auto-push at the end of a phase without explicit user approval.
+- Force-push, amend pushed commits, or deploy unless the user explicitly requests it.
