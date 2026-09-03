@@ -5,6 +5,12 @@ export type McqDetail = McqSummary & {
 	choices: McqChoice[];
 };
 
+export type McqWriteBody = {
+	name: string;
+	question: string;
+	choices: Array<{ choiceText: string; isCorrect: boolean }>;
+};
+
 export type McqListResponse = {
 	mcqs: McqSummary[];
 };
@@ -50,11 +56,7 @@ export async function getMcq(id: string): Promise<McqDetail> {
 	return parseJsonResponse<McqDetail>(response);
 }
 
-export async function createMcq(
-	body: Omit<McqDetail, "id" | "createdAt" | "updatedAt"> & {
-		choices: Array<{ choiceText: string; isCorrect: boolean }>;
-	},
-): Promise<McqDetail> {
+export async function createMcq(body: McqWriteBody): Promise<McqDetail> {
 	const response = await fetch("/api/mcqs", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -76,11 +78,7 @@ export async function createMcq(
 
 export async function updateMcq(
 	id: string,
-	body: {
-		name: string;
-		question: string;
-		choices: Array<{ choiceText: string; isCorrect: boolean }>;
-	},
+	body: McqWriteBody,
 ): Promise<McqDetail> {
 	const response = await fetch(`/api/mcqs/${id}`, {
 		method: "PUT",

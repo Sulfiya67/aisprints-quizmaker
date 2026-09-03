@@ -537,22 +537,22 @@ Record a preview attempt.
 
 
 
-### Phase 4: Create, Edit, and Preview Pages - PLANNED
+### Phase 4: Create, Edit, and Preview Pages - COMPLETED
 
 **Objective:** Complete form and preview flows with Save/Cancel.
 
 **Tasks:**
 
-1. Create `src/components/mcq/mcq-form.tsx` (shared create/edit client form).
-2. Add pages: `mcqs/new/page.tsx`, `mcqs/[id]/edit/page.tsx`, `mcqs/[id]/preview/page.tsx`.
-3. Create `src/components/mcq/mcq-preview.tsx` for attempt submission and feedback.
-4. Handle loading and error states on edit/preview.
-5. Confirm Cancel returns to Dashboard without persisting.
+1. ✅ Create `src/components/mcq/mcq-form.tsx` (shared create/edit client form).
+2. ✅ Add pages: `mcqs/new/page.tsx`, `mcqs/[id]/edit/page.tsx`, `mcqs/[id]/preview/page.tsx`.
+3. ✅ Create `src/components/mcq/mcq-preview.tsx` for attempt submission and feedback.
+4. ✅ Handle loading and error states on edit/preview.
+5. ✅ Confirm Cancel returns to Dashboard without persisting.
 
 **Deliverables:**
 
-- End-to-end create, edit, preview, delete from UI
-- Forms use shadcn Field, Input, Textarea, Button
+- ✅ End-to-end create, edit, preview, delete from UI
+- ✅ Forms use shadcn Field, Input, Textarea, Button
 
 
 
@@ -620,14 +620,15 @@ Record a preview attempt.
 | `src/app/api/mcqs/[id]/route.ts`                           | Get, update, delete              | ✅ Created |
 | `src/app/api/mcqs/[id]/attempts/route.ts`                  | Record attempt                   | ✅ Created |
 | `src/components/mcq/mcq-table.tsx`                         | Dashboard table                  | ✅ Created |
-| `src/components/mcq/mcq-form.tsx`                          | Create/edit form                 | PLANNED |
-| `src/components/mcq/mcq-preview.tsx`                       | Preview + attempt                | PLANNED |
+| `src/components/mcq/mcq-form.tsx`                          | Create/edit form                 | ✅ Created |
+| `src/components/mcq/mcq-preview.tsx`                       | Preview + attempt                | ✅ Created |
 | `src/components/mcq/delete-mcq-dialog.tsx`                 | Delete confirmation              | ✅ Created |
 | `src/components/ui/dropdown-menu.tsx`                      | Row actions menu                 | ✅ Created |
+| `src/components/ui/textarea.tsx`                           | Question field input             | ✅ Created |
 | `src/app/(protected)/dashboard/page.tsx`                   | MCQ list page                    | ✅ Created |
-| `src/app/(protected)/dashboard/mcqs/new/page.tsx`          | Create page                      | PLANNED |
-| `src/app/(protected)/dashboard/mcqs/[id]/edit/page.tsx`    | Edit page                        | PLANNED |
-| `src/app/(protected)/dashboard/mcqs/[id]/preview/page.tsx` | Preview page                     | PLANNED |
+| `src/app/(protected)/dashboard/mcqs/new/page.tsx`          | Create page                      | ✅ Created |
+| `src/app/(protected)/dashboard/mcqs/[id]/edit/page.tsx`    | Edit page                        | ✅ Created |
+| `src/app/(protected)/dashboard/mcqs/[id]/preview/page.tsx` | Preview page                     | ✅ Created |
 | `vitest.config.ts`                                         | Test runner config               | ✅ Created |
 
 
@@ -875,19 +876,19 @@ When working with this PRD:
 
 **Last Updated:** September 3, 2026
 
-**Current Phase:** Phase 4 — Create, Edit, and Preview Pages
+**Current Phase:** Phase 5 — Verification and Hardening
 
 **Status:** PLANNED
 
-**Verification (Phase 3):**
+**Verification (Phase 4):**
 
 - `npm run test` — 29 tests passed
 - `npm run lint` — pass
-- `npm run build` — pass
+- `npm run build` — pass (create/edit/preview routes registered)
 
 **Next Steps:**
 
-1. Create shared `mcq-form.tsx` for create/edit
-2. Add `/dashboard/mcqs/new`, edit, and preview pages
-3. Wire preview attempt submission UI
+1. Run full verification matrix on `npm run preview`
+2. Verify cross-user isolation
+3. Mark acceptance criteria in PRD
 
