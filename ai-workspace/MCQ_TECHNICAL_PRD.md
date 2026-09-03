@@ -499,22 +499,22 @@ Record a preview attempt.
 
 
 
-### Phase 2: Service Layer and API Routes - PLANNED
+### Phase 2: Service Layer and API Routes - COMPLETED
 
 **Objective:** Implement MCQ service and REST endpoints with auth checks.
 
 **Tasks:**
 
-1. Create `src/lib/services/mcq.ts` — list, get, create, update, delete, recordAttempt.
-2. Add `src/lib/mcq/auth.ts` — require session user helper for route handlers.
-3. Add `src/lib/mcq/api.ts` — typed client helpers (optional, for UI).
-4. Implement `GET/POST /api/mcqs`, `GET/PUT/DELETE /api/mcqs/[id]`, `POST /api/mcqs/[id]/attempts`.
-5. Add `src/lib/services/mcq.test.ts` with mocked `getDb` / db modules.
+1. ✅ Create `src/lib/services/mcq.ts` — list, get, create, update, delete, recordAttempt.
+2. ✅ Add `src/lib/mcq/auth.ts` — require session user helper for route handlers.
+3. ✅ Add `src/lib/mcq/api.ts` — typed client helpers (optional, for UI).
+4. ✅ Implement `GET/POST /api/mcqs`, `GET/PUT/DELETE /api/mcqs/[id]`, `POST /api/mcqs/[id]/attempts`.
+5. ✅ Add `src/lib/services/mcq.test.ts` with mocked `getDb` / db modules.
 
 **Deliverables:**
 
-- All endpoints return documented status codes
-- Service tests cover happy path and key failures (not found, validation, auth)
+- ✅ All endpoints return documented status codes
+- ✅ Service tests cover happy path and key failures (not found, validation, auth)
 
 
 
@@ -612,12 +612,13 @@ Record a preview attempt.
 | `src/lib/mcq/constants.ts`                                 | Choice limits, field max lengths | ✅ Created |
 | `src/lib/mcq/validation.ts`                                | Zod schemas                      | ✅ Created |
 | `src/lib/mcq/validation.test.ts`                           | Validation unit tests            | ✅ Created |
-| `src/lib/mcq/auth.ts`                                      | Session guard for API routes     | PLANNED |
-| `src/lib/services/mcq.ts`                                  | MCQ business logic               | PLANNED |
-| `src/lib/services/mcq.test.ts`                             | Service unit tests               | PLANNED |
-| `src/app/api/mcqs/route.ts`                                | List + create                    | PLANNED |
-| `src/app/api/mcqs/[id]/route.ts`                           | Get, update, delete              | PLANNED |
-| `src/app/api/mcqs/[id]/attempts/route.ts`                  | Record attempt                   | PLANNED |
+| `src/lib/mcq/auth.ts`                                      | Session guard for API routes     | ✅ Created |
+| `src/lib/services/mcq.ts`                                  | MCQ business logic               | ✅ Created |
+| `src/lib/services/mcq.test.ts`                             | Service unit tests               | ✅ Created |
+| `src/lib/mcq/api.ts`                                       | Typed API client helpers         | ✅ Created |
+| `src/app/api/mcqs/route.ts`                                | List + create                    | ✅ Created |
+| `src/app/api/mcqs/[id]/route.ts`                           | Get, update, delete              | ✅ Created |
+| `src/app/api/mcqs/[id]/attempts/route.ts`                  | Record attempt                   | ✅ Created |
 | `src/components/mcq/mcq-table.tsx`                         | Dashboard table                  | PLANNED |
 | `src/components/mcq/mcq-form.tsx`                          | Create/edit form                 | PLANNED |
 | `src/components/mcq/mcq-preview.tsx`                       | Preview + attempt                | PLANNED |
@@ -873,20 +874,19 @@ When working with this PRD:
 
 **Last Updated:** September 3, 2026
 
-**Current Phase:** Phase 2 — Service Layer and API Routes
+**Current Phase:** Phase 3 — Dashboard Table and Actions
 
-**Status:** IN PROGRESS
+**Status:** PLANNED
 
-**Verification (Phase 1):**
+**Verification (Phase 2):**
 
-- `npm run test` — 18 tests passed
+- `npm run test` — 29 tests passed (18 validation + 11 service)
 - `npm run lint` — pass
-- `npm run build` — pass
-- Local D1 tables: `mcqs`, `mcq_choices`, `mcq_attempts` confirmed
+- `npm run build` — pass (MCQ API routes registered)
 
 **Next Steps:**
 
-1. Implement `src/lib/services/mcq.ts`
-2. Add API route handlers under `src/app/api/mcqs/`
-3. Add `src/lib/services/mcq.test.ts`
+1. Add shadcn `dropdown-menu` component
+2. Build Dashboard MCQ table and row actions
+3. Add delete confirmation dialog
 
