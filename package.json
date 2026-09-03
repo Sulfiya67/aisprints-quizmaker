@@ -32,6 +32,7 @@
 		"@types/node": "^22.19.0",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"esbuild": "^0.25.4",
 		"eslint": "^9",
 		"eslint-config-next": "16.2.12",
 		"shadcn": "^4.16.1",
@@ -40,5 +41,8 @@
 		"vite-tsconfig-paths": "^6.1.1",
 		"vitest": "^4.1.11",
 		"wrangler": "^4.118.0"
+	},
+	"allowScripts": {
+		"esbuild@0.25.4": true
 	}
 }
