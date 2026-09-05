@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -205,45 +205,63 @@ export function McqForm({ mode, mcqId, initialData }: McqFormProps) {
 					</FieldDescription>
 
 					<div className="space-y-3">
-						{choices.map((choice, index) => (
-							<div
-								key={index}
-								className="flex flex-col gap-2 rounded-lg border border-border p-3 sm:flex-row sm:items-center"
-							>
-								<label className="flex shrink-0 items-center gap-2 text-sm">
-									<input
-										type="radio"
-										name="correctChoice"
-										checked={choice.isCorrect}
-										onChange={() => handleCorrectChange(index)}
-										disabled={isSubmitting}
-										className="size-4 accent-primary"
-									/>
-									<span>Correct</span>
-								</label>
+						{choices.map((choice, index) => {
+							const canRemove =
+								!isSubmitting && choices.length > MIN_CHOICES;
 
-								<Input
-									value={choice.choiceText}
-									onChange={(event) =>
-										handleChoiceTextChange(index, event.target.value)
-									}
-									placeholder={`Choice ${index + 1}`}
-									disabled={isSubmitting}
-									aria-label={`Choice ${index + 1} text`}
-								/>
-
-								<Button
-									type="button"
-									variant="outline"
-									size="icon-sm"
-									onClick={() => handleRemoveChoice(index)}
-									disabled={isSubmitting || choices.length <= MIN_CHOICES}
-									aria-label={`Remove choice ${index + 1}`}
+							return (
+								<div
+									key={index}
+									className="flex items-center gap-3"
 								>
-									<MinusIcon />
-								</Button>
-							</div>
-						))}
+									<Input
+										value={choice.choiceText}
+										onChange={(event) =>
+											handleChoiceTextChange(index, event.target.value)
+										}
+										placeholder={`Choice ${index + 1}`}
+										disabled={isSubmitting}
+										aria-label={`Choice ${index + 1} text`}
+										className="flex-1"
+									/>
+
+									<label
+										className={cn(
+											"flex shrink-0 items-center gap-2 text-sm transition-opacity",
+											!choice.isCorrect && "opacity-40",
+										)}
+									>
+										<input
+											type="radio"
+											name="correctChoice"
+											checked={choice.isCorrect}
+											onChange={() => handleCorrectChange(index)}
+											disabled={isSubmitting}
+											className="size-4 accent-foreground"
+										/>
+										<span>Correct</span>
+									</label>
+
+									<button
+										type="button"
+										onClick={() => {
+											if (canRemove) {
+												handleRemoveChoice(index);
+											}
+										}}
+										disabled={isSubmitting}
+										aria-disabled={!canRemove}
+										aria-label={`Remove choice ${index + 1}`}
+										className={cn(
+											"shrink-0 text-sm transition-opacity",
+											!canRemove && "opacity-40",
+										)}
+									>
+										Remove
+									</button>
+								</div>
+							);
+						})}
 					</div>
 
 					<Button

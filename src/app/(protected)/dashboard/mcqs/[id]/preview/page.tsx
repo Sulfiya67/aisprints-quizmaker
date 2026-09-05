@@ -54,7 +54,17 @@ export default async function PreviewMcqPage({ params }: PageProps) {
 					</p>
 				</div>
 
-				<McqPreview mcq={mcq} />
+				<McqPreview
+					mcq={{
+						id: mcq.id,
+						name: mcq.name,
+						question: mcq.question,
+						choices: mcq.choices.map(({ id, choiceText }) => ({
+							id,
+							choiceText,
+						})),
+					}}
+				/>
 			</main>
 		</div>
 	);

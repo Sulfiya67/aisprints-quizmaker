@@ -14,13 +14,24 @@ import {
 import {
 	submitAttempt,
 	type AttemptResponse,
-	type McqDetail,
 	type McqValidationError,
 } from "@/lib/mcq/api";
 import { cn } from "@/lib/utils";
 
+export type PreviewChoice = {
+	id: string;
+	choiceText: string;
+};
+
+export type PreviewMcq = {
+	id: string;
+	name: string;
+	question: string;
+	choices: PreviewChoice[];
+};
+
 type McqPreviewProps = {
-	mcq: McqDetail;
+	mcq: PreviewMcq;
 };
 
 function isValidationError(error: unknown): error is McqValidationError {
@@ -39,6 +50,15 @@ export function McqPreview({ mcq }: McqPreviewProps) {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [result, setResult] = useState<AttemptResponse | null>(null);
 
+	const hasSubmitted = result !== null;
+
+	function handleTryAgain() {
+		setResult(null);
+		setSelectedChoiceId("");
+		setFieldErrors({});
+		setFormError(null);
+	}
+
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setFieldErrors({});
@@ -46,7 +66,7 @@ export function McqPreview({ mcq }: McqPreviewProps) {
 
 		if (!selectedChoiceId) {
 			setFieldErrors({
-				selectedChoiceId: "Please select a valid answer.",
+				selectedChoiceId: "Please select an answer before submitting.",
 			});
 			return;
 		}
@@ -90,7 +110,7 @@ export function McqPreview({ mcq }: McqPreviewProps) {
 						<div
 							role="status"
 							className={cn(
-								"rounded-lg border px-3 py-2 text-sm",
+								"rounded-lg border px-3 py-2 text-sm font-medium",
 								result.isCorrect
 									? "border-primary/30 bg-primary/5 text-foreground"
 									: "border-destructive/30 bg-destructive/5 text-destructive",
@@ -98,28 +118,86 @@ export function McqPreview({ mcq }: McqPreviewProps) {
 						>
 							{result.message}
 						</div>
-					) : null}
+					) : (
+						<p className="text-sm text-muted-foreground">
+							Select an answer, then click Submit answer.
+						</p>
+					)}
 
 					<FieldSet data-invalid={!!fieldErrors.selectedChoiceId}>
 						<FieldLabel>Choose an answer</FieldLabel>
 						<div className="space-y-2">
-							{mcq.choices.map((choice) => (
-								<label
-									key={choice.id}
-									className="flex items-center gap-3 rounded-lg border border-border px-3 py-2 text-sm has-checked:border-primary/40 has-checked:bg-primary/5"
-								>
-									<input
-										type="radio"
-										name="selectedChoice"
-										value={choice.id}
-										checked={selectedChoiceId === choice.id}
-										onChange={() => setSelectedChoiceId(choice.id)}
-										disabled={isSubmitting}
-										className="size-4 accent-primary"
-									/>
-									<span>{choice.choiceText}</span>
-								</label>
-							))}
+							{mcq.choices.map((choice) => {
+								const isSelected = selectedChoiceId === choice.id;
+								const isCorrectChoice =
+									result?.correctChoiceId === choice.id;
+
+								return (
+									<label
+										key={choice.id}
+										className={cn(
+											"flex items-center gap-3 rounded-lg border px-3 py-2 text-sm",
+											!hasSubmitted &&
+												isSelected &&
+												"border-primary/40 bg-primary/5",
+											!hasSubmitted &&
+												!isSelected &&
+												"border-border",
+											hasSubmitted &&
+												isCorrectChoice &&
+												"border-primary/40 bg-primary/5",
+											hasSubmitted &&
+												isSelected &&
+												result &&
+												!result.isCorrect &&
+												"border-destructive/40 bg-destructive/5",
+											hasSubmitted &&
+												!isSelected &&
+												!isCorrectChoice &&
+												"border-border opacity-70",
+										)}
+									>
+										<input
+											type="radio"
+											name="selectedChoice"
+											value={choice.id}
+											checked={isSelected}
+											onChange={() => {
+												if (hasSubmitted) {
+													return;
+												}
+
+												setSelectedChoiceId(choice.id);
+												setFieldErrors((current) => {
+													if (!current.selectedChoiceId) {
+														return current;
+													}
+
+													const next = { ...current };
+													delete next.selectedChoiceId;
+													return next;
+												});
+											}}
+											disabled={isSubmitting || hasSubmitted}
+											className="size-4 accent-primary"
+										/>
+										<span className="flex-1">{choice.choiceText}</span>
+										{hasSubmitted && isCorrectChoice ? (
+											<span className="text-xs font-medium text-primary">
+												Correct answer
+											</span>
+										) : null}
+										{hasSubmitted &&
+										isSelected &&
+										result &&
+										!result.isCorrect ? (
+											<span className="text-xs font-medium text-destructive">
+												Your answer
+											</span>
+										) : null}
+									</label>
+								);
+							})}
 						</div>
 						<Field data-invalid={!!fieldErrors.selectedChoiceId}>
 							<FieldError>{fieldErrors.selectedChoiceId}</FieldError>
@@ -127,9 +205,18 @@ export function McqPreview({ mcq }: McqPreviewProps) {
 					</FieldSet>
 
 					<div className="flex flex-wrap gap-3">
-						<Button type="submit" disabled={isSubmitting}>
-							{isSubmitting ? "Submitting..." : "Submit answer"}
-						</Button>
+						{hasSubmitted ? (
+							<Button type="button" onClick={handleTryAgain}>
+								Try again
+							</Button>
+						) : (
+							<Button
+								type="submit"
+								disabled={isSubmitting || !selectedChoiceId}
+							>
+								{isSubmitting ? "Submitting..." : "Submit answer"}
+							</Button>
+						)}
 						<Link
 							href="/dashboard"
 							className={cn(buttonVariants({ variant: "outline" }))}
